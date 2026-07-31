@@ -1,4 +1,4 @@
-# USASCO DSA Practice Repository
+#  DSA Practice Repository(TLE-CSES-usasco-and-more)
 
 This folder contains a collection of C++ solutions and practice materials for competitive programming and data structures & algorithms study.
 
