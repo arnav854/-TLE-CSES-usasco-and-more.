@@ -12,6 +12,7 @@ typedef long long int ll;
 #define f_b(i,a,b) for (int i = a ; i <= b ;i++ )  
 #define f(i,a,b) for (int i = a ; i <b ;i++ )  
 #define all(v) sort(v.begin(),v.end())
+#define rev_all(v) sort(v.begin(),v.end(), greater<int>())
 
 const int MX = 15000000;
 const ll MOD = 1000000007;
@@ -99,64 +100,43 @@ vector<int> manacher(string s) {
 9.  Figure 'kyu' in every intution why stopped ( Hard to do )
 */
 void solve() {
-    int n ; cin >> n;
-    dvi v (n, vector < int > (2)) ;
-    for (int i = 0 ; i < n ; i++ ){
-        for (int j = 0 ;  j < 2 ; j++ ){
-            cin >> v[i][j] ;
-        }
-    }
-    vill store (n) ;
-    for (int i = 0 ; i < n ; i++ ){
-        int pos_min = INT_MAX ;
-        int neg_max = INT_MIN;
-        bool is = false ;
-        bool is_eq = false  ;
-        store[i]++ ;
-        for (int j = i+1 ; j < n ; j++ ){
-            if (i==0){
-                if (v[i][1]-v[j][1]>0 && max(v[j][1],neg_max)==v[j][1]){
-                    store[j]+=store[i] ;
-                    neg_max = max(v[j][1],neg_max);
-                }else if (v[i][1]-v[j][1]<0 && min(v[j][1],pos_min)==v[j][1]){
-                    store[j]+=store[i] ;
-                    pos_min = min(v[j][1],pos_min);
-                }else if (v[i][1] == v[j][1] && !is_eq ) {
-                    is_eq = true ;
-                    store[j]+=store[i] ;
-                    neg_max = max(v[j][1],neg_max);
-                    pos_min = min(v[j][1],pos_min);
-                }
-            }else {
-                ll temp = store[i] ;
-                if (is) temp = store[i] -store[i-1] ;
-                if (v[i][1]-v[j][1]>0 && max(v[j][1],neg_max)==v[j][1]){
-                    store[j]+=temp ;
-                    neg_max = max(v[j][1],neg_max);
-                }else if (v[i][1]-v[j][1]<0 && min(v[j][1],pos_min)==v[j][1]){
-                    store[j]+=temp ;
-                    pos_min = min(v[j][1],pos_min);
-                }else if (v[i][1] == v[j][1] && !is_eq ) {
-                    is_eq = true ;
-                    store[j]+=temp ;
-                    neg_max = max(v[j][1],neg_max);
-                    pos_min = min(v[j][1],pos_min);
-                }
-                if ((v[i-1][1]<=v[j][1] && v[i][1]>=v[j][1])|| (v[i-1][1]>=v[j][1]&& v[i][1]<= v[j][1])) is = true ;
-            }
-        }
-    }
-    ll ans  = 1;
-    for (int i = 0 ; i < n ; i++ ) ans+= store[i] ;
-    cout << ans << endl ; 
-}
+    int n , k ; cin >> n >> k ; 
+    vill v (n) ;
+    take_v(v) ;
+    all(v) ;
+    vill temp_left(n);
+    int r  = 0 ;
+    // 1 5 5 9 10 12 14 
 
+    for (int i = 0; i < n; i++) {
+        int x = v[i];
+
+        while (r < n && 1LL*v[r] <= 1LL*x + k) {
+            r++;
+        }
+        temp_left[i] = r-i;
+    }
+    // 1 10 5 31 22 26 14 
+    vill max_right(n+1) ;
+    for (int i = n-1 ; i >=0 ; i-- ){
+        max_right[i] =  max(max_right[i+1] , temp_left[i]) ;
+    }
+    ll ans = 0 ;
+    // 31 31 31 31 26 22 14 0 
+    r  = 0 ;
+    for (int i = 0 ; i < n ; i++ ){
+        ans = max ( ans , temp_left[i]+max_right[i+temp_left[i]]) ;
+        
+    }
+    cout << ans << endl ;
+}
 
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
+    freopen("diamond.in","r",stdin) ;
+    freopen("diamond.out","w",stdout) ;
 
-    int t ; cin >> t ;  while(t--)
     solve();
     return 0;
 }
