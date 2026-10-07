@@ -26,9 +26,28 @@ typedef long long int ll;
 #define take_v(v) \
  for (auto &x : v) \
     cin>> x ; \
-
+string A =  "Alice" ;
+string B = "Bob";
 void solve() {
-    int n ,x  , y ;
+    int n , x  ; cin >> n >> x  ;
+    ll y ; cin >> y ; 
+    vi v(n) ;
+    take_v(v) ;
+    int ans = 0 ;
+    for ( int i =0 ; i < n ;i++ ){
+        if (v[i]%2)  ans ++ ;
+    }
+    int k1 = 0 ; 
+    int k2 = 0 ;
+    if ( x % 2 ) k1++ ;
+    else k2 ++ ; 
+    if ( y % 2 ){
+        if ( (k1 + ans )%2) cout << A << endl ;
+        else cout << B << endl ;
+    }else {
+        if ( ((k1 + ans )%2) == 0 ) cout << A << endl ;
+        else cout << B << endl ;
+    }
 }
 
 int main() {
