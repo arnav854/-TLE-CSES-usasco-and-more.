@@ -28,49 +28,40 @@ typedef long long int ll;
     cin>> x ; \
 
 void solve() {
-    int n ; cin >> n ;
-    vi v (n) ;
+    int n , k ; cin >> n >> k ; 
+    vector < bool > flg (n-1) ;
+    vi v(n) ;
     take_v(v) ;
-    bool is_zero = false ;
-    int maxi = 0 ;
-    for ( int i = 0 ; i < n ; i++ ){
-        if (v[i] % 2 ){
-            v[i]+= (v[i]%10) ; 
-        }
-        if (v[i]%10 == 0 ){
-            is_zero =  true ;
-        }  
-        maxi = max (maxi , v[i]) ;
-
-    }
-    if (is_zero){
-        for ( int i = 1 ; i < n ; i++ ){
-            if (v[i] !=v[0]) {
-                cout << "No" << endl ;
-                return ;
+    for ( int i = 1 ; i < n ; i++ ) {
+        if (2*v[i] > v[i-1]){
+            flg[i-1] = true ; 
+        }else flg[i-1] = false ; 
+    } 
+    /*
+       x  y   z   x  x   x 
+         Yes Yes No Yes Yes 
+    
+    */
+    // for ( int i =0  ; i < n-1 ; i+=1 ){
+    //     cout << flg[i] << " " ;
+    // }
+    // cout << endl ; 
+    
+    int ans = 0 ;
+    int l = 0 ; int yes = 0 ;
+    for ( int i = 0 ; i < n-1 ; i++ ){
+        if (flg[i] == true )yes++ ;
+        else yes-- ; 
+        if (i-l+1 == k ){
+            if (yes == k){
+                ans ++ ; 
             }
-        }
-    }else {
-        for (int i = 0 ; i < n ;i++ ){
-            if (v[i]!=maxi){
-                while ((v[i]%10)!=(maxi%10)){
-                    v[i] += (v[i]%10) ;
-                }
-            }
-        }
-        for (int i = 0 ; i <  n; i++ ){
-            if (v[i]> maxi) {
-                cout << "No" << endl; 
-                return ; 
-            }else {
-                if ((maxi -v[i])%20 !=0) {
-                    cout << "No" << endl; 
-                    return ; 
-                }
-            }
+            if (flg[l]) yes-- ;
+            else yes++ ; 
+            l++ ; 
         }
     }
-    cout << "Yes" << endl ;
+    cout << ans << endl ; 
 }
 
 int main() {
