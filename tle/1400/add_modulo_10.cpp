@@ -56,6 +56,9 @@ void solve() {
                 while ((v[i]%10)!=(maxi%10)){
                     v[i] += (v[i]%10) ;
                 }
+                /*
+                 
+                */
             }
         }
         for (int i = 0 ; i <  n; i++ ){
