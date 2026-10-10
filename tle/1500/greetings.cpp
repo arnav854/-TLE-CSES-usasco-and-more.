@@ -33,29 +33,14 @@ typedef long long int ll;
     cin>> x ; \
 
 void solve() {
-    int n ; cin >> n ; 
-    /*
     
-        3
-        1 2 9
-        10 1 1
-
-    */
-    vill v(n),v1(n) ;
-    take_v(v) ;take_v(v1) ;
-    vill dp1(n), dp2(n) ;
-    dp1[0] = v[0]; dp2[0] =v1[0] ;
-    for ( int i = 1 ; i < n ; i++ ){
-        dp1[i] = max (dp2[i-1]+v[i] ,dp1[i-1]);
-        dp2[i] = max (dp1[i-1]+v1[i] ,dp2[i-1]);
-    }
-    cout << max(dp1[n-1] , dp2[n-1]) ;
 }
 
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
 
+    int t ; cin >> t ;  while(t--)
     solve();
     return 0;
 }
